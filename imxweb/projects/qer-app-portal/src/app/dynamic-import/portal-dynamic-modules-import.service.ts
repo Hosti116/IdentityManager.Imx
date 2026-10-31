@@ -42,6 +42,11 @@ import { RmsConfigModule } from "rms";
 import { RpsConfigModule } from "rps";
 import { SacConfigModule } from "sac";
 import { TsbConfigModule } from "tsb";
+// CCC-CUSTOM: ccc plugin (custom dashboard tiles), loaded in loadThirdPartyModules.
+import { CccConfigModule } from "ccc";
+import { environment } from "../../environments/environment";
+
+const CCC_PLUGIN: PlugInInfo = { Container: 'ccc', Name: 'CccConfigModule' };
 
 @Injectable({ providedIn: 'root' })
 export class PortalDynamicModuleImportService extends DynamicModuleImportService {
@@ -147,8 +152,16 @@ export class PortalDynamicModuleImportService extends DynamicModuleImportService
   }
   
   async loadThirdPartyModules(modules: PlugInInfo[]): Promise<void> {
-    // Use the JSDoc example of how to handle any external modules you have built
-    return;
+    // CCC-CUSTOM: load the ccc plugin when the API Server lists it (deployed imx-plugin-config.json).
+    // In development builds it is also loaded when the local API Server does not list it yet,
+    // so the plugin can be tested with `ng serve` before it is deployed.
+    const cccModule = modules.find((m) => m.Container === CCC_PLUGIN.Container) ?? (environment.production ? undefined : CCC_PLUGIN);
+    if (cccModule) {
+      await this.loadModule(cccModule, async () => {
+        await import('ccc');
+        return [CccConfigModule];
+      });
+    }
   }
 
 }

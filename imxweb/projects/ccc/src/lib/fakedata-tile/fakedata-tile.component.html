@@ -1,0 +1,11 @@
+@if (fakedataCount !== undefined) {
+  <imx-badge-tile
+    data-imx-identifier="ccc-dashboard-fakedata-tile"
+    [caption]="'#LDS#Demo identities' | translate"
+    [tooltip]="'#LDS#Shows the number of demo identities created with fake data.' | translate"
+    [value]="fakedataCount.toString()"
+    [identifier]="'ccc-fakedata-tile'"
+    (actionClick)="openIdentities()"
+  >
+  </imx-badge-tile>
+}

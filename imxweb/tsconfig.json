@@ -31,6 +31,8 @@
       "iqc/*": ["dist/iqc/*"],
       "olg": ["dist/olg"],
       "olg/*": ["dist/olg/*"],
+      "ccc": ["dist/ccc"],
+      "ccc/*": ["dist/ccc/*"],
       "o3t": ["dist/o3t"],
       "o3t/*": ["dist/o3t/*"],
       "pol": ["dist/pol"],
