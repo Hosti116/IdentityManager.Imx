@@ -1,0 +1,44 @@
+// CCC: per-theme Reti logo in the masthead and on the login page.
+// Identity Manager has a single CompanyLogoUrl for all themes, so the logo is drawn by the theme CSS:
+// the default One Identity logo/icon is hidden and the Reti logo is shown as a background image.
+// Works only while CompanyLogoUrl is empty. DOM selectors depend on:
+//   - eui-masthead template (@elemental-ui/core): header.eui-masthead > .eui-masthead-inner > eui-logo > svg
+//   - qbm login-page.component.html: .imx-loginPage > .imx-companyLogo > eui-icon + h1
+// Re-check both after every upgrade (see oim/webportal/CUSTOMIZATIONS.md).
+
+@use 'sass:math';
+
+// Brand Book p.6: minimum logo height 52px.
+$masthead-logo-height: 52px;
+$login-logo-height: 120px;
+
+@mixin logo-image($logo, $ratio, $height) {
+  display: inline-block;
+  width: math.round($height * $ratio);
+  height: $height !important; // eui-logo sets an inline height through a host binding
+  background: $logo no-repeat center / contain;
+}
+
+@mixin masthead-logo($logo, $ratio) {
+  .eui-masthead-inner > eui-logo {
+    @include logo-image($logo, $ratio, $masthead-logo-height);
+
+    svg {
+      display: none;
+    }
+  }
+}
+
+@mixin login-logo($logo, $ratio) {
+  .imx-loginPage .imx-companyLogo:not(:has(.custom-logo)) {
+    > eui-icon,
+    > h1 {
+      display: none;
+    }
+
+    &::before {
+      content: '';
+      @include logo-image($logo, $ratio, $login-logo-height);
+    }
+  }
+}

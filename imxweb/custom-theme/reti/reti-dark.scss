@@ -1,0 +1,127 @@
+// CCC: "Reti scuro" Web Portal theme (class reti-dark-theme).
+// Dark UI, dark masthead and login page with the red logo (decision D1-b, agreed with the customer:
+// deviates from Brand Book p.3-4, which reserves the red logo for white backgrounds).
+// Build: oim/webportal/themes/Build-RetiThemes.ps1
+//
+// Note: the dark-mode rules of the components are scoped to .eui-dark-theme, a class that a custom
+// theme cannot set (EuiThemeService adds one class only). The ccc plugin (RetiThemeService) adds it
+// next to this class and recolors the fixed One Identity palette. Without the plugin only the masthead,
+// the login page and the Material palette below are dark.
+
+@use '@angular/material' as mat;
+@use '../../shared/scss/base/theme' as imx-theme;
+@use 'reti-base' as base;
+@use 'reti-palette' as palette;
+@use 'reti-logos' as logos;
+@use 'reti-branding' as branding;
+@use 'reti-scoped-theme' as scoped;
+
+$theme-name: 'reti-dark-theme';
+
+// Red on dark surfaces (decisions 2026-11-15). Kept in sync with projects/ccc/src/lib/theme/reti-colors.ts.
+// - primary = hue 200 #f69097, the single red for text buttons, links, icons, active tab and indicators
+//   (about 7:1 on the page #1e1e1e, 4.2:1 on cards and menu bars #444647);
+// - $dark-fill #a4262c with white text (7.3:1): filled buttons, FABs, badges, selected chips/dates, stepper
+//   icons (overrides at the end of this file; hue 200 would give them dark text).
+$dark-fill: #a4262c;
+$on-dark-fill: palette.$light-primary-text;
+$primary: mat.m2-define-palette(palette.$reti-red-palette, 200, 100, 400);
+$accent: mat.m2-define-palette(palette.$reti-anthracite-palette, 200, 50, 400);
+$warn: mat.m2-define-palette(palette.$reti-amber-palette, 300, 100, 500);
+
+$theme: mat.m2-define-dark-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+    typography: base.$typography,
+  )
+);
+
+// Not theme.theme(): see _reti-scoped-theme.scss.
+@include scoped.theme($theme-name, $theme);
+@include imx-theme.theme($theme-name, $theme);
+
+$masthead-border-width: 3px;
+
+body.#{$theme-name} {
+  // Dark masthead with a brand red bottom line instead of the primary background.
+  // Selector must beat ".eui-dark-theme eui-masthead header.eui-masthead" (0,2,2), active once the ccc
+  // plugin adds .eui-dark-theme: body.reti-dark-theme eui-masthead header.eui-masthead = (0,2,3).
+  eui-masthead header.eui-masthead {
+    background-color: palette.$surface-dark;
+    color: palette.$on-surface-dark;
+    border-bottom: $masthead-border-width solid palette.$brand-red;
+
+    .mat-toolbar.mat-primary {
+      --mat-toolbar-container-background-color: transparent;
+      --mat-toolbar-container-text-color: #{palette.$on-surface-dark};
+      background: transparent;
+      color: palette.$on-surface-dark;
+    }
+
+    .mat-mdc-button.mat-unthemed {
+      color: palette.$on-surface-dark;
+    }
+  }
+
+  // Login page on the dark surface (the base theme would use the primary color).
+  .imx-loginPage {
+    background-color: palette.$surface-dark;
+    color: palette.$on-surface-dark;
+  }
+
+  @include branding.masthead-logo(logos.$reti-logo-red, logos.$reti-logo-red-ratio);
+  @include branding.login-logo(logos.$reti-logo-red, logos.$reti-logo-red-ratio);
+
+  // Primary fills: dark red with white text (the primary hue 200 would give them dark text).
+  // Same selectors as Material emits them inside body.reti-dark-theme; later in the file, so they win.
+  --mat-badge-background-color: #{$dark-fill};
+  --mat-badge-text-color: #{$on-dark-fill};
+  --mat-datepicker-calendar-date-selected-state-background-color: #{$dark-fill};
+  --mat-datepicker-calendar-date-selected-state-text-color: #{$on-dark-fill};
+  --mat-stepper-header-selected-state-icon-background-color: #{$dark-fill};
+  --mat-stepper-header-selected-state-icon-foreground-color: #{$on-dark-fill};
+  --mat-stepper-header-done-state-icon-background-color: #{$dark-fill};
+  --mat-stepper-header-done-state-icon-foreground-color: #{$on-dark-fill};
+  --mat-stepper-header-edit-state-icon-background-color: #{$dark-fill};
+  --mat-stepper-header-edit-state-icon-foreground-color: #{$on-dark-fill};
+
+  // Title bars that the ElementalUI (sidesheet) and imx (login-theme) mixins fill with the darker primary hue.
+  .eui-sidesheet .mat-toolbar,
+  .imx-card-header {
+    background-color: $dark-fill;
+    color: $on-dark-fill;
+  }
+
+  .mat-badge:not(.mat-badge-accent, .mat-badge-warn) {
+    --mat-badge-background-color: #{$dark-fill};
+    --mat-badge-text-color: #{$on-dark-fill};
+  }
+
+  .mat-mdc-unelevated-button.mat-primary,
+  .mat-mdc-raised-button.mat-primary {
+    --mat-button-filled-container-color: #{$dark-fill};
+    --mat-button-filled-label-text-color: #{$on-dark-fill};
+    --mat-button-protected-container-color: #{$dark-fill};
+    --mat-button-protected-label-text-color: #{$on-dark-fill};
+  }
+
+  .mat-mdc-fab.mat-primary,
+  .mat-mdc-mini-fab.mat-primary {
+    --mat-fab-container-color: #{$dark-fill};
+    --mat-fab-foreground-color: #{$on-dark-fill};
+    --mat-fab-small-container-color: #{$dark-fill};
+    --mat-fab-small-foreground-color: #{$on-dark-fill};
+  }
+
+  .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary,
+  .mat-mdc-standard-chip.mat-mdc-chip-highlighted.mat-primary {
+    --mat-chip-elevated-selected-container-color: #{$dark-fill};
+    --mat-chip-selected-label-text-color: #{$on-dark-fill};
+    --mat-chip-selected-trailing-icon-color: #{$on-dark-fill};
+    --mat-chip-with-icon-selected-icon-color: #{$on-dark-fill};
+  }
+}

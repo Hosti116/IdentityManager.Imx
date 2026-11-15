@@ -1,0 +1,50 @@
+// CCC: "Reti chiaro" Web Portal theme (class reti-light-theme).
+// Light UI, masthead and login page in brand red with the white logo (Brand Book p.4:
+// the white logo is used on colored backgrounds). Build: oim/webportal/themes/Build-RetiThemes.ps1
+
+@use '@angular/material' as mat;
+@use '../../shared/scss/base/theme' as imx-theme;
+@use 'reti-scoped-theme' as scoped;
+@use 'reti-base' as base;
+@use 'reti-palette' as palette;
+@use 'reti-logos' as logos;
+@use 'reti-branding' as branding;
+
+$theme-name: 'reti-light-theme';
+
+$primary: mat.m2-define-palette(palette.$reti-red-palette, 500, 300, 700);
+$accent: mat.m2-define-palette(palette.$reti-anthracite-palette, 700, 400, 900);
+$warn: mat.m2-define-palette(palette.$reti-amber-palette, 500, 300, 700);
+
+$theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+    typography: base.$typography,
+  )
+);
+
+// Not theme.theme(): see _reti-scoped-theme.scss.
+@include scoped.theme($theme-name, $theme);
+@include imx-theme.theme($theme-name, $theme);
+
+body.#{$theme-name} {
+  @include branding.masthead-logo(logos.$reti-logo-white, logos.$reti-logo-white-ratio);
+  @include branding.login-logo(logos.$reti-logo-white, logos.$reti-logo-white-ratio);
+
+  // imx-theme.theme() (login-theme mixin, shared/scss/base/theme.scss) gives .imx-loginPage the primary
+  // contrast color (white) and the card header the 800 hue with lighter-contrast (dark) text. The card does
+  // not set its own text color, so labels and the username turned white on white. Same result as the
+  // standard light theme: dark text in the card, light text on the dark header.
+  .imx-loginPage .imx-card {
+    color: palette.$dark-primary-text;
+  }
+
+  .imx-loginPage .imx-card-header,
+  .imx-loginPage .imx-card-header eui-icon {
+    color: palette.$light-primary-text;
+  }
+}

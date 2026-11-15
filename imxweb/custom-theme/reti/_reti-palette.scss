@@ -1,0 +1,110 @@
+// CCC: Reti S.p.A. color palettes for the Reti Web Portal themes.
+// Brand red #eb212e (Brand Book p.3, hex value) is hue 500. The brand book defines no secondary
+// colors: accent is a neutral anthracite, warn is a dark amber/orange so that errors are not
+// confused with the brand red. Palette format: same as @elemental-ui/core/src/styles/_palette.scss.
+
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
+
+$brand-red: #eb212e;
+$surface-dark: #1e1e1e;
+$on-surface-dark: #f2f2f2;
+
+$reti-red-palette: (
+  50: #fde5e7,
+  100: #fabcc1,
+  200: #f69097,
+  300: #f1646d,
+  400: #ee424d,
+  500: $brand-red,
+  600: #d81c28,
+  700: #c11723,
+  800: #a9131d,
+  900: #861016,
+  A100: #ffe1e3,
+  A200: #ffaeb3,
+  A400: #ff7b84,
+  A700: #ff616c,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+$reti-anthracite-palette: (
+  50: #f2f3f4,
+  100: #dfe1e3,
+  200: #c4c8cc,
+  300: #a3a9af,
+  400: #7f868d,
+  500: #5f666d,
+  600: #4c5258,
+  700: #3c4146,
+  800: #2e3236,
+  900: #1f2225,
+  A100: #e3e8ee,
+  A200: #b7c2cd,
+  A400: #8696a6,
+  A700: #6d7f91,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+
+$reti-amber-palette: (
+  50: #fff5e6,
+  100: #ffe4bf,
+  200: #ffd194,
+  300: #ffbd66,
+  400: #f59e2e,
+  500: #b45309,
+  600: #a14a08,
+  700: #8c4007,
+  800: #773606,
+  900: #5c2a04,
+  A100: #ffe9cc,
+  A200: #ffcf8f,
+  A400: #ffb352,
+  A700: #ff9f29,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
