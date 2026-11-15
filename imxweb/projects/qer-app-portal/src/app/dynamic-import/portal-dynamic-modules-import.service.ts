@@ -42,7 +42,7 @@ import { RmsConfigModule } from "rms";
 import { RpsConfigModule } from "rps";
 import { SacConfigModule } from "sac";
 import { TsbConfigModule } from "tsb";
-// CCC-CUSTOM: ccc plugin (custom dashboard tiles), loaded in loadThirdPartyModules.
+// CCC-CUSTOM: ccc plugin (custom dashboard tiles, runtime support of the Reti themes), loaded in loadThirdPartyModules.
 import { CccConfigModule } from "ccc";
 import { environment } from "../../environments/environment";
 
